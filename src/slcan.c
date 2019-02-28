@@ -6,6 +6,8 @@
 #include "can.h"
 #include "slcan.h"
 
+#define LW232_LAWICEL_VERSION_STR     "V1013"
+#define LW232_LAWICEL_SERIAL_NUM      "NA123"
 
 // Parse an incoming CAN frame into an outgoing slcan message
 int8_t slcan_parse_frame(uint8_t *buf, CanRxMsgTypeDef *frame)
@@ -177,6 +179,16 @@ int8_t slcan_parse_str(uint8_t *buf, uint8_t len)
     } else if (buf[0] == 'r' || buf[0] == 'R') {
         // Transmit remote frame command
         frame.RTR = CAN_RTR_REMOTE;
+
+    } else if (buf[0] == 'v' || buf[0] == 'V') {
+        // Get Version command
+        CDC_Transmit_FS(LW232_LAWICEL_VERSION_STR, 5);
+        return 0;
+
+    } else if (buf[0] == 'N') {
+        // Get Serial command
+        CDC_Transmit_FS(LW232_LAWICEL_SERIAL_NUM, 5);
+        return 0;
 
     } else {
         // Error, unknown command
