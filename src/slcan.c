@@ -184,12 +184,12 @@ int8_t slcan_parse_str(uint8_t *buf, uint8_t len)
 
     } else if (buf[0] == 'v' || buf[0] == 'V') {
         // Get Version command
-        CDC_Transmit_FS((uint8_t *)LW232_LAWICEL_VERSION_STR, 6);
+        CDC_Transmit_FS((uint8_t *)LW232_LAWICEL_VERSION_STR, 5);
         return 0;
 
     } else if (buf[0] == 'N') {
         // Get Serial command
-        CDC_Transmit_FS((uint8_t *)LW232_LAWICEL_SERIAL_NUM, 6);
+        CDC_Transmit_FS((uint8_t *)LW232_LAWICEL_SERIAL_NUM, 5);
         return 0;
 
     } else {
