@@ -6,8 +6,10 @@
 #include "can.h"
 #include "slcan.h"
 
-#define LW232_LAWICEL_VERSION_STR     "V1013"
-#define LW232_LAWICEL_SERIAL_NUM      "NA123"
+#define LW232_LAWICEL_VERSION_STR     "V1013\r"
+#define LW232_LAWICEL_SERIAL_NUM      "NA123\r"
+
+uint8_t CDC_Transmit_FS(uint8_t* Buf, uint16_t Len); // forward declaration
 
 // Parse an incoming CAN frame into an outgoing slcan message
 int8_t slcan_parse_frame(uint8_t *buf, CanRxMsgTypeDef *frame)
@@ -182,12 +184,12 @@ int8_t slcan_parse_str(uint8_t *buf, uint8_t len)
 
     } else if (buf[0] == 'v' || buf[0] == 'V') {
         // Get Version command
-        CDC_Transmit_FS(LW232_LAWICEL_VERSION_STR, 5);
+        CDC_Transmit_FS((uint8_t *)LW232_LAWICEL_VERSION_STR, 6);
         return 0;
 
     } else if (buf[0] == 'N') {
         // Get Serial command
-        CDC_Transmit_FS(LW232_LAWICEL_SERIAL_NUM, 5);
+        CDC_Transmit_FS((uint8_t *)LW232_LAWICEL_SERIAL_NUM, 6);
         return 0;
 
     } else {
